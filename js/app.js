@@ -30,7 +30,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var playerEnt = function() {
+var Player = function() {
     this.sprite = 'images/char-boy.png';
     //position relative to rows and columns on board
     this.x = 200;
@@ -38,23 +38,38 @@ var playerEnt = function() {
     this.moving = false;
 
 }
-
-playerEnt.prototype.update = function(){
+Player.prototype.update = function(){
 
 }
 
-playerEnt.prototype.render = function(){
+Player.prototype.render = function(){
    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
-playerEnt.prototype.handleInput = function(){
-
+Player.prototype.handleInput = function(key){
+    if(key === 'up' && this.y > 5){
+        this.y -= 90
+    }else if(key === 'down' && this.y < 400 ){
+        this.y += 90
+    }else if(key === 'left' && this.x > 0){
+        this.x -= 100
+    } else if(key === 'right' && this.x < 400){
+        this.x += 100
+    }
 }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const player = new playerEnt();
-allEnemies.push(new Enemy());
+const player = new Player();
+//first row enemy
+const enemyOne = new Enemy(0, 220, 40);
+const enemyTwo = new Enemy(0, 130, 40);
+const enemyThree = new Enemy(0, 50, 40);
+
+
+allEnemies.push(enemyOne);
+allEnemies.push(enemyTwo);
+allEnemies.push(enemyThree);
 
 
 
