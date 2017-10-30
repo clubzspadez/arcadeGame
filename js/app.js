@@ -13,8 +13,8 @@ var Enemy = function(x, y, speed) {
     this.speed = speed;
     this.moving = false;
     this.originX = x;
-    this.width = 100;
-    this.height = 90;
+    this.width = 60;
+    this.height = 70;
 };
 
 // Update the enemy's position, required method for game
@@ -27,8 +27,10 @@ Enemy.prototype.update = function(dt) {
      if(this.x > 500){
         this.reset();
         }
-    if(this.x == player.x){
-        this.collision();
+    this.collisionObj(this);
+    if(this.collisionObj(this)) {
+        player.x = player.initialX;
+        player.y = player.initialY;
     }
 };
 
@@ -41,12 +43,35 @@ Enemy.prototype.reset= function(){
         this.x = this.originX;
 }
 
-Enemy.prototype.collision = function(){
-        console.log("collision");
-        player.playerLives--;
-        player.reset();
-        player.lives();
+Enemy.prototype.collisionObj = function(ob1){
+    let currentEn = ob1;
+    if(currentEn.x < player.x + player.width &&
+        currentEn.x + currentEn.width > player.x &&
+        currentEn.y < player.y + player.height &&
+        currentEn.height + currentEn.y > player.y) {
+        // collision detected!
+        console.log("collision with enemy " + currentEn);
+        return true;
+
+    }
 }
+Enemy.prototype.collision = function(){
+    for (var i = 0; i < allEnemies.length; i++) {
+        for(var x = 0; x < allEnemies.length; x++){
+            let currentEn = allEnemies[x];
+            if(currentEn.x < player.x + player.width &&
+               currentEn.x + currentEn.width > player.x &&
+               currentEn.y < player.y + player.height &&
+               currentEn.height + currentEn.y > player.y) {
+                // collision detected!
+                console.log("collision with enemy " + currentEn);
+                player.reset();
+
+            }
+        }
+    }
+}
+
 
 
 // Now write your own player class
@@ -59,6 +84,10 @@ var Player = function() {
     this.y = 400;
     this.moving = false;
     this.playerLives = 3;
+    this.width = 50;
+    this.height = 70;
+    this.initialY = 400;
+    this.initialX = 200;
 
 
     //update player
