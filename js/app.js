@@ -13,6 +13,8 @@ var Enemy = function(x, y, speed) {
     this.speed = speed;
     this.moving = false;
     this.originX = x;
+    this.width = 100;
+    this.height = 90;
 };
 
 // Update the enemy's position, required method for game
@@ -25,6 +27,9 @@ Enemy.prototype.update = function(dt) {
      if(this.x > 500){
         this.reset();
         }
+    if(this.x == player.x){
+        this.collision();
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -34,6 +39,13 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.reset= function(){
         this.x = this.originX;
+}
+
+Enemy.prototype.collision = function(){
+        console.log("collision");
+        player.playerLives--;
+        player.reset();
+        player.lives();
 }
 
 
@@ -46,6 +58,8 @@ var Player = function() {
     this.x = 200;
     this.y = 400;
     this.moving = false;
+    this.playerLives = 3;
+
 
     //update player
     this.update = function(){
@@ -72,6 +86,14 @@ var Player = function() {
     this.x = 200;
     this.y = 400;
     this.moving = true;
+    }
+    this.lives = function(){
+        // if(this.playerLives < 3){
+        //     player.reset();
+        // } else{
+        //     this.playerLives--;
+        // }
+
     }
 }
 // Now instantiate your objects.
