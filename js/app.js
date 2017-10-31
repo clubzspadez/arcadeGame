@@ -132,8 +132,8 @@ const player = new Player();
 //first row enemy
 const enemyOne = new Enemy(-1000, 220, 500);
 const enemyOneSec = new Enemy(-2000, 220, 500);
-const enemyTwo = new Enemy(-500, 130, 700);
-const enemyTwoSec = new Enemy(-1500, 130, 700);
+const enemyTwo = new Enemy(-500, 130, 550);
+const enemyTwoSec = new Enemy(-1500, 130, 550);
 const enemyThree = new Enemy(-400, 50, 600);
 const enemyThreeSec = new Enemy(-1400, 50,  600);
 
