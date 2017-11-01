@@ -86,8 +86,8 @@ var Player = function() {
     this.playerLives = 3;
     this.width = 50;
     this.height = 70;
-    this.initialY = 400;
-    this.initialX = 200;
+    this.initialY = this.y;
+    this.initialX = this.x;
 
 
     //update player
