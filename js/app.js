@@ -72,6 +72,23 @@ Enemy.prototype.collision = function(){
     }
 }
 
+var Gem = function(x, y, color){
+     if(color === 'blue'){
+        this.sprite = 'images/GemBlue.png';
+        this.value = 1;
+     } else if( color === 'green'){
+        this.sprite = 'images/GemGreen.png';
+        this.value = 2;
+     } else if(color === 'orange'){
+        this.sprite = 'images/GemOrange.png';
+        this.value = 3;
+     }
+     this.x = x;
+     this.y = y;
+}
+Gem.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
 
 
 // Now write your own player class
@@ -88,6 +105,7 @@ var Player = function() {
     this.height = 70;
     this.initialY = this.y;
     this.initialX = this.x;
+    this.playerLives = 0;
 
 
     //update player
@@ -101,6 +119,9 @@ var Player = function() {
     //handle input
     this.handleInput = function(key){
         if(key === 'up' && this.y > 5){
+            if(this.y < 90){
+                this.reset();
+            }
             this.y -= 90
         }else if(key === 'down' && this.y < 400 ){
             this.y += 90
@@ -117,6 +138,7 @@ var Player = function() {
     this.moving = true;
     }
     this.lives = function(){
+        playerLives = 3;
         // if(this.playerLives < 3){
         //     player.reset();
         // } else{
@@ -136,6 +158,7 @@ const enemyTwo = new Enemy(-500, 130, 550);
 const enemyTwoSec = new Enemy(-1500, 130, 550);
 const enemyThree = new Enemy(-400, 50, 600);
 const enemyThreeSec = new Enemy(-1400, 50,  600);
+const gem = new Gem(300, 400, 'blue');
 
 
 allEnemies.push(enemyOne);
