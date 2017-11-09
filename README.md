@@ -1,6 +1,18 @@
-frontend-nanodegree-arcade-game
+# frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Summary
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+This game is the clone of the classic Frogger Game
+
+## How to play
+
+The main goal of the game is to collect gems. If you are hit by any bugs then you have to start from the bottom. You have 3 lives, and when you die completely you will be given the option to restart. The bugs are coming along the road with different speed.
+
+The Player can be controlled by the arrow keys.
+
+## How to download
+
+GitHub repository: https://github.com/clubzspadez/arcadeGame
+
+Download the game, unzip and start the game with the index.html file.
