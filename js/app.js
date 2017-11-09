@@ -31,6 +31,7 @@ Enemy.prototype.update = function(dt) {
     if(this.collisionObj(this)) {
         player.x = player.initialX;
         player.y = player.initialY;
+        player.playerLives -= 1
     }
 };
 
@@ -71,25 +72,80 @@ Enemy.prototype.collision = function(){
         }
     }
 }
+function entityCollision(ent1, ent2){
+    let entity1 = ent1;
+    if(entity1.x < player.x + player.width &&
+               entity1.x + entity1.width > player.x &&
+               entity1.y < player.y + player.height &&
+               entity1.height + entity1.y > player.y) {
+                // collision detected!
+                console.log("collision with entity " + entity1);
+                return true;
+            }
+            return false;
+}
 
-var Gem = function(x, y, color){
-     if(color === 'blue'){
-        this.sprite = 'images/GemBlue.png';
-        this.value = 1;
-     } else if( color === 'green'){
-        this.sprite = 'images/GemGreen.png';
-        this.value = 2;
-     } else if(color === 'orange'){
-        this.sprite = 'images/GemOrange.png';
-        this.value = 3;
-     }
-     this.x = x;
-     this.y = y;
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+const colorsArray = ['green', 'blue', 'orange'];
+
+var Gem = function(x, y){
+     this.changeGem();
+     this.randomGem();
+     this.width = 80;
+     this.height = 60;
+     this.score = 0;
 }
 Gem.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'yellow';
+    ctx.textAlign = 'right';
+    ctx.fillText('Score: ' + this.score, 100, 100);
 }
 
+Gem.prototype.update = function(){
+    this.entityCollision(this);
+    if(this.entityCollision(this)){
+        this.score += this.value;
+        this.changeGem();
+        this.randomGem();
+        player.reset();
+    }
+}
+Gem.prototype.entityCollision = function(ent1){
+    let entity1 = ent1;
+    if(entity1.x < player.x + player.width &&
+               entity1.x + entity1.width > player.x &&
+               entity1.y < player.y + player.height &&
+               entity1.height + entity1.y > player.y) {
+                // collision detected!
+                console.log("collision with entity " + entity1);
+                return true;
+            }
+            return false;
+}
+Gem.prototype.randomGem = function(){
+    this.x = getRandomInt(0, 300);
+    this.y = getRandomInt(0, 220);
+}
+Gem.prototype.changeGem = function(){
+    this.color = colorsArray[getRandomInt(0,3)];
+     if(this.color === 'blue'){
+        this.sprite = 'images/GemBlue.png';
+        this.value = 1;
+     } else if(this.color === 'green'){
+        this.sprite = 'images/GemGreen.png';
+        this.value = 2;
+     } else if(this.color === 'orange'){
+        this.sprite = 'images/GemOrange.png';
+        this.value = 3;
+     }
+}
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -105,16 +161,19 @@ var Player = function() {
     this.height = 70;
     this.initialY = this.y;
     this.initialX = this.x;
-    this.playerLives = 0;
+    this.playerLives = 3;
 
 
     //update player
     this.update = function(){
-
     }
     //render player
     this.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'yellow';
+    ctx.textAlign = 'right';
+    ctx.fillText('Lives: ' + this.playerLives, 450, 100);
     }
     //handle input
     this.handleInput = function(key){
@@ -133,8 +192,8 @@ var Player = function() {
     }
     //reset method
     this.reset = function(){
-    this.x = 200;
-    this.y = 400;
+    this.x = this.initialX;
+    this.y = this.initialY;
     this.moving = true;
     }
     this.lives = function(){
@@ -158,7 +217,7 @@ const enemyTwo = new Enemy(-500, 130, 550);
 const enemyTwoSec = new Enemy(-1500, 130, 550);
 const enemyThree = new Enemy(-400, 50, 600);
 const enemyThreeSec = new Enemy(-1400, 50,  600);
-const gem = new Gem(300, 400, 'blue');
+const gem = new Gem(200, 300, 'blue');
 
 
 allEnemies.push(enemyOne);
