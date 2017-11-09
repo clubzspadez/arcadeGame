@@ -1,4 +1,8 @@
 const allEnemies = [];
+let myModal = $('.modal2');
+let close = $('.close');
+let repeat = $('.play');
+let modal = $('.modal');
 
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {
@@ -114,7 +118,6 @@ Gem.prototype.update = function(){
         this.score += this.value;
         this.changeGem();
         this.randomGem();
-        player.reset();
     }
 }
 Gem.prototype.entityCollision = function(ent1){
@@ -166,6 +169,9 @@ var Player = function() {
 
     //update player
     this.update = function(){
+        if(this.playerLives === 0) {
+            game.end();
+        }
     }
     //render player
     this.render = function(){
@@ -206,6 +212,32 @@ var Player = function() {
 
     }
 }
+var game = {
+    start : function(){
+        //run if the game counter condition is met
+            myModal.css('display', 'block');
+        // When the user clicks on <span> (x), close the modal
+            close.click(function() {
+                myModal.css('display', 'none');
+            });
+            repeat.click(function(){
+                myModal.css('display', 'none');
+            });
+    },
+    end : function(){
+        modal.css('display', 'block');
+        close.click(function() {
+            modal.css('display', 'none');
+            player.playerLives = 3;
+            gem.score = 0;
+        });
+        repeat.click(function(){
+            modal.css('display', 'none');
+            player.playerLives = 3;
+            gem.score = 0;
+        });
+    },
+}
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -217,8 +249,8 @@ const enemyTwo = new Enemy(-500, 130, 550);
 const enemyTwoSec = new Enemy(-1500, 130, 550);
 const enemyThree = new Enemy(-400, 50, 600);
 const enemyThreeSec = new Enemy(-1400, 50,  600);
-const gem = new Gem(200, 300, 'blue');
-
+const gem = new Gem();
+game.start();
 
 allEnemies.push(enemyOne);
 allEnemies.push(enemyOneSec);

@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <title>Effective JavaScript: Frogger</title>
     <link rel="stylesheet" href="css/style.css">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
 </head>
 <body>
-    <script src="js/resources.js"></script>
+	<div class="modal2">
+           <!-- Modal content -->
+      <div class="new-game">
+        <span class="close">&times;</span>
+        <p>Welcome!</p>
+        <p class="info">The main goal of the game is to collect gems. If you are hit by any bugs then you have to start from the bottom. You have 3 lives, and when you die completely you will be given the option to restart. The bugs are coming along the road with different speeds.</p>
+        <span class="restart play">PLAY</span>
+      </div>
+    </div>
+	<div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="you-lost">
+        <span class="close">&times;</span>
+        <p>You lost!</p>
+        <span class="restart play">RESTART/PLAYAGAIN</span>
+      </div>
+
+    </div>
+
+	<script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
 </body>
