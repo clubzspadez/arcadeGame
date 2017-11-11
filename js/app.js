@@ -1,3 +1,4 @@
+'use strict';
 const allEnemies = [];
 let myModal = $('.modal2');
 let close = $('.close');
@@ -19,11 +20,13 @@ var Enemy = function(x, y, speed) {
     this.originX = x;
     this.width = 60;
     this.height = 70;
+
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+    let enemyEnt = this;
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -31,11 +34,11 @@ Enemy.prototype.update = function(dt) {
      if(this.x > 500){
         this.reset();
         }
-    this.collisionObj(this);
-    if(this.collisionObj(this)) {
+    this.collisionObj();
+    if(this.collisionObj()) {
         player.x = player.initialX;
         player.y = player.initialY;
-        player.playerLives -= 1
+        player.playerLives -= 1;
     }
 };
 
@@ -48,14 +51,13 @@ Enemy.prototype.reset= function(){
         this.x = this.originX;
 }
 
-Enemy.prototype.collisionObj = function(ob1){
-    let currentEn = ob1;
-    if(currentEn.x < player.x + player.width &&
-        currentEn.x + currentEn.width > player.x &&
-        currentEn.y < player.y + player.height &&
-        currentEn.height + currentEn.y > player.y) {
+Enemy.prototype.collisionObj = function(){
+    if(this.x < player.x + player.width &&
+        this.x + this.width > player.x &&
+        this.y < player.y + player.height &&
+        this.height + this.y > player.y) {
         // collision detected!
-        console.log("collision with enemy " + currentEn);
+        console.log("collision with enemy " + this);
         return true;
 
     }
@@ -75,18 +77,6 @@ Enemy.prototype.collision = function(){
             }
         }
     }
-}
-function entityCollision(ent1, ent2){
-    let entity1 = ent1;
-    if(entity1.x < player.x + player.width &&
-               entity1.x + entity1.width > player.x &&
-               entity1.y < player.y + player.height &&
-               entity1.height + entity1.y > player.y) {
-                // collision detected!
-                console.log("collision with entity " + entity1);
-                return true;
-            }
-            return false;
 }
 
 function getRandomInt(min, max) {
@@ -113,21 +103,20 @@ Gem.prototype.render = function(){
 }
 
 Gem.prototype.update = function(){
-    this.entityCollision(this);
-    if(this.entityCollision(this)){
+    this.entityCollision();
+    if(this.entityCollision()){
         this.score += this.value;
         this.changeGem();
         this.randomGem();
     }
 }
-Gem.prototype.entityCollision = function(ent1){
-    let entity1 = ent1;
-    if(entity1.x < player.x + player.width &&
-               entity1.x + entity1.width > player.x &&
-               entity1.y < player.y + player.height &&
-               entity1.height + entity1.y > player.y) {
+Gem.prototype.entityCollision = function(){
+    if(this.x < player.x + player.width &&
+               this.x + this.width > player.x &&
+               this.y < player.y + player.height &&
+               this.height + this.y > player.y) {
                 // collision detected!
-                console.log("collision with entity " + entity1);
+                console.log("collision with entity " + this);
                 return true;
             }
             return false;
@@ -166,15 +155,15 @@ var Player = function() {
     this.initialX = this.x;
     this.playerLives = 3;
 
-
+}
     //update player
-    this.update = function(){
+    Player.prototype.update = function(){
         if(this.playerLives === 0) {
             game.end();
         }
     }
     //render player
-    this.render = function(){
+    Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     ctx.font = '20px Arial';
     ctx.fillStyle = 'yellow';
@@ -182,7 +171,7 @@ var Player = function() {
     ctx.fillText('Lives: ' + this.playerLives, 450, 100);
     }
     //handle input
-    this.handleInput = function(key){
+    Player.prototype.handleInput = function(key){
         if(key === 'up' && this.y > 5){
             if(this.y < 90){
                 this.reset();
@@ -197,21 +186,12 @@ var Player = function() {
         }
     }
     //reset method
-    this.reset = function(){
+    Player.prototype.reset = function(){
     this.x = this.initialX;
     this.y = this.initialY;
     this.moving = true;
     }
-    this.lives = function(){
-        playerLives = 3;
-        // if(this.playerLives < 3){
-        //     player.reset();
-        // } else{
-        //     this.playerLives--;
-        // }
 
-    }
-}
 var game = {
     start : function(){
         //run if the game counter condition is met
