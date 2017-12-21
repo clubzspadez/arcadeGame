@@ -16,3 +16,6 @@ The Player can be controlled by the arrow keys.
 GitHub repository: https://github.com/clubzspadez/arcadeGame
 
 Download the game, unzip and start the game with the index.html file.
+
+## LIVE 
+https://clubzspadez.github.io/arcadeGame/
